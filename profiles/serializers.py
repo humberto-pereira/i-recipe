@@ -7,4 +7,5 @@ class ProfileSerializer(serializers.ModelSerializer):
         model = Profile
         fields = [
             'id', 'user', 'created_at', 'updated_at', 'name', 'content', 'image'
-        ]
+        ] # 'id' is created automatically by Django
+
