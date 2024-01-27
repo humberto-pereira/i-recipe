@@ -6,7 +6,7 @@ class RecipePosts(models.Model):
     created_at = models.DateTimeField(auto_now_add=True) # auto_now_add=True means that the field will be automatically set when the object is first created
     updated_at = models.DateTimeField(auto_now=True) # auto_now=True means that the field will be automatically set every time the object is saved
     title = models.CharField(max_length=255)
-    content = models.TextField()
+    content = models.TextField(blank=False)
     image = models.ImageField(upload_to='images/', default='../default_post_xvhdrp', blank=True)
 
     class Meta:

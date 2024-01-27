@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Post
+from .models import RecipePosts
 
 class RecipePostsSerializer(serializers.ModelSerializer):
     user = serializers.ReadOnlyField(source='user.username')
@@ -21,7 +21,7 @@ class RecipePostsSerializer(serializers.ModelSerializer):
         return request.user == obj.user
     
     class Meta:
-        model = Post
+        model = RecipePosts
         fields = [
-            'id', 'user', 'created_at', 'updated_at', 'title', 'content', 'image', 'is_user', 'profile_id', 'image'
+            'id', 'user', 'created_at', 'updated_at', 'title', 'content', 'profile_image', 'is_user', 'profile_id', 'image'
         ] # 'id' is created automatically by Django
