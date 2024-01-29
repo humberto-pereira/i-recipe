@@ -1,5 +1,4 @@
-from rest_framework import generics, permissions, status
-from rest_framework.response import Response
+from rest_framework import generics, permissions
 from .models import RecipeComments
 from .serializers import RecipeCommentsSerializer, RecipeCommentsDetailSerializer
 from i_recipe_api.permissions import IsOwnerOrReadOnly
