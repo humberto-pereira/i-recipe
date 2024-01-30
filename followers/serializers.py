@@ -4,11 +4,11 @@ from django.db import IntegrityError
 
 class FollowersSerializer(serializers.ModelSerializer):
     user = serializers.ReadOnlyField(source='user.username')
-    follower_name = serializers.ReadOnlyField(source='follower.username')
+    followed_name = serializers.ReadOnlyField(source='followed.username')
 
     class Meta:
         model = Followers
-        fields = ['id', 'user', 'follower', 'created_at', 'follower_name']
+        fields = ['id', 'user', 'followed', 'created_at', 'followed_name']
 
     def create(self, validated_data):
         try:
