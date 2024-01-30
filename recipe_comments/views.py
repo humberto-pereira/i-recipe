@@ -2,6 +2,7 @@ from rest_framework import generics, permissions
 from .models import RecipeComments
 from .serializers import RecipeCommentsSerializer, RecipeCommentsDetailSerializer
 from i_recipe_api.permissions import IsOwnerOrReadOnly
+from django_filters.rest_framework import DjangoFilterBackend
 
 class RecipeCommentsList(generics.ListCreateAPIView):
     """
@@ -13,6 +14,12 @@ class RecipeCommentsList(generics.ListCreateAPIView):
     queryset = RecipeComments.objects.all()
     serializer_class = RecipeCommentsSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    filter_backends = [
+        DjangoFilterBackend,
+    ]
+    filterset_fields = [
+        'post'
+    ]
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
