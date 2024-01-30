@@ -11,7 +11,16 @@ class RecipePostsList(generics.ListCreateAPIView):
         likes_count=Count('likes', distinct=True),
         comments_count=Count('recipe_comments', distinct=True),
     ).order_by('-created_at')
-    filter_backends = [filters.OrderingFilter]
+    filter_backends = [
+        filters.OrderingFilter,
+        filters.SearchFilter
+    ]
+    search_fields = [
+        'title',
+        'content',
+        'user__username',
+        'tags'
+    ]
     ordering_fields = [
         'likes_count', 
         'comments_count',
