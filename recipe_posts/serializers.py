@@ -32,5 +32,5 @@ class RecipePostsSerializer(serializers.ModelSerializer):
     class Meta:
         model = RecipePosts
         fields = [
-            'id', 'user', 'created_at', 'updated_at', 'title', 'content', 'profile_image', 'is_user', 'profile_id', 'image', 'tags', 'like_id',
+            'id', 'user', 'created_at', 'updated_at', 'title', 'content', 'profile_image', 'is_user', 'profile_id', 'image', 'tags', 'like_id', 'category'
         ] # 'id' is created automatically by Django
