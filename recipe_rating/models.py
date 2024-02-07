@@ -11,6 +11,7 @@ class RecipeRating(models.Model):
     
     class Meta:
         ordering = ['-rating']
+        unique_together = ('recipe', 'user')
 
     def __str__(self):
         return f"{self.user}'s rating of {self.recipe}: {self.rating}"

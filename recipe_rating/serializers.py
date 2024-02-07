@@ -11,9 +11,15 @@ class RecipeRatingSerializer(serializers.ModelSerializer):
     average_rating = serializers.ReadOnlyField(source='recipe.average_rating')
 
     def get_is_user(self, obj):
+        """
+        Check if the request's user is the object's user, ensuring object is saved and request is authenticated.
+        """
         request = self.context.get('request')
-        return request.user == obj.user
-    
+        if hasattr(obj, 'pk') and request and hasattr(request, "user"):
+            return obj.user == request.user
+        return False
+
+
     class Meta:
         model = RecipeRating
         fields = ['id', 'recipe', 'user', 'rating', 'created_at', 'updated_at', 'profile_image', 'is_user', 'profile_id', 'recipe_title', 'average_rating']
