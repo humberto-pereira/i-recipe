@@ -1,3 +1,4 @@
+from django.db.models import Avg
 from rest_framework import serializers
 from .models import RecipePosts
 from likes.models import Like
@@ -8,15 +9,7 @@ class RecipePostsSerializer(serializers.ModelSerializer):
     profile_id = serializers.ReadOnlyField(source='user.profile.id')
     profile_image = serializers.ReadOnlyField(source='user.profile.image.url')
     like_id = serializers.SerializerMethodField()
-
-    def validate_image(self, value):
-        if value.size > 1024 * 1024 * 2:
-            raise serializers.ValidationError('Image size should be up to 2MB.')
-        if value.image.width > 4096:
-            raise serializers.ValidationError('Image width should be up to 4096px.')
-        if value.image.height > 4096:
-            raise serializers.ValidationError('Image height should be up to 4096px.')
-        return value
+    average_rating = serializers.SerializerMethodField()
 
     def get_is_user(self, obj):
         request = self.context.get('request')
@@ -29,8 +22,21 @@ class RecipePostsSerializer(serializers.ModelSerializer):
             return like.id if like else None
         return None
     
+    def get_average_rating(self, obj):
+        average = obj.ratings.aggregate(Avg('rating'))['rating__avg']
+        return round(average, 1) if average else None
+    
     class Meta:
         model = RecipePosts
         fields = [
-            'id', 'user', 'created_at', 'updated_at', 'title', 'content', 'profile_image', 'is_user', 'profile_id', 'image', 'tags', 'like_id', 'category'
-        ] # 'id' is created automatically by Django
+            'id', 'user', 'created_at', 'updated_at', 'title', 'content', 'profile_image', 'is_user', 'profile_id', 'image', 'tags', 'like_id', 'category', 'average_rating'
+        ]
+
+class RecipePostWithRatingSerializer(RecipePostsSerializer):
+    avg_rating = serializers.SerializerMethodField()
+
+    def get_avg_rating(self, obj):
+        return obj.ratings.aggregate(Avg('rating')).get('rating__avg') or 0.0
+
+    class Meta(RecipePostsSerializer.Meta):
+        fields = RecipePostsSerializer.Meta.fields + ['avg_rating']
