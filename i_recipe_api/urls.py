@@ -26,4 +26,5 @@ urlpatterns = [
     path('', include('followers.urls')),
     path('', include('recipe_category.urls')),
     path('', include('recipe_rating.urls')),
+    path('', include('messaging.urls')),
 ]
