@@ -23,7 +23,7 @@ class RecipePostsSerializer(serializers.ModelSerializer):
         return None
     
     def get_average_rating(self, obj):
-        average = obj.ratings.aggregate(Avg('rating'))['rating__avg']
+        average = obj.ratings.aggregate(average_rating=Avg('rating'))['average_rating'] or 0.0
         return round(average, 1) if average else None
     
     class Meta:

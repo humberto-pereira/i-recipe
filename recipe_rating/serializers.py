@@ -3,12 +3,14 @@ from .models import RecipeRating
 
 class RecipeRatingSerializer(serializers.ModelSerializer):
 
+    your_rating = serializers.ChoiceField(choices=RecipeRating.rating.field.choices, source='rating')
+    recipe_average_rating = serializers.SerializerMethodField()
     user = serializers.ReadOnlyField(source='user.username')
     is_user = serializers.SerializerMethodField()
     profile_id = serializers.ReadOnlyField(source='user.profile.id')
     profile_image = serializers.ReadOnlyField(source='user.profile.image.url')
     recipe_title = serializers.ReadOnlyField(source='recipe.title')
-    average_rating = serializers.ReadOnlyField(source='recipe.average_rating')
+    
 
     def get_is_user(self, obj):
         """
@@ -22,7 +24,10 @@ class RecipeRatingSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = RecipeRating
-        fields = ['id', 'recipe', 'user', 'rating', 'created_at', 'updated_at', 'profile_image', 'is_user', 'profile_id', 'recipe_title', 'average_rating']
+        fields = ['id', 'recipe', 'user', 'created_at', 'updated_at', 'profile_image', 'is_user', 'profile_id', 'recipe_title', 'your_rating','recipe_average_rating']
+
+    def get_recipe_average_rating(self, obj):
+        return RecipeRating.calculate_average_for_recipe(obj.recipe_id)
 
 class RecipeRatingDetailSerializer(RecipeRatingSerializer):
     """
