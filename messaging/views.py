@@ -1,11 +1,9 @@
 from django.db.models import Q
 from rest_framework import generics, permissions, status
-from rest_framework.response import Response
-from .models import Message
-from .serializers import MessageSerializer
+from .models import Message, Conversation
+from .serializers import MessageSerializer, ConversationSerializer
 from django.utils import timezone
 from datetime import timedelta
-from i_recipe_api.permissions import IsOwnerOrReadOnly
 from rest_framework.exceptions import PermissionDenied
 
 class MessageListView(generics.ListCreateAPIView):
@@ -18,6 +16,8 @@ class MessageListView(generics.ListCreateAPIView):
     def get_queryset(self):
         user = self.request.user
         return Message.objects.filter(recipient=user).order_by('-created_at')
+    
+    
 
 class MessageDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = MessageSerializer
@@ -50,3 +50,26 @@ class MessageDetailView(generics.RetrieveUpdateDestroyAPIView):
         if timezone.now() - instance.created_at > timedelta(hours=24):
             raise PermissionDenied("Messages can only be deleted within 24 hours of sending.")
         instance.delete()
+
+class ConversationListView(generics.ListAPIView):
+    queryset = Conversation.objects.all()
+    serializer_class = ConversationSerializer
+    permission_classes = [permissions.IsAuthenticated]  # Ensure only authenticated users can access this view
+
+    def get_queryset(self):
+        # Check if the user is authenticated
+        user = self.request.user
+        if user.is_authenticated:
+            # Filter conversations to only those where the current user is a participant
+            return Conversation.objects.filter(participants__in=[user]).distinct()
+        else:
+            # Optionally handle unauthenticated users, such as returning an empty queryset
+            return Conversation.objects.all()
+
+class ConversationDetailView(generics.RetrieveAPIView):
+    queryset = Conversation.objects.all()
+    serializer_class = ConversationSerializer
+    # Add permission_classes as needed
+
+    def get_queryset(self):
+        return Conversation.objects.all()
