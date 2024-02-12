@@ -5,7 +5,7 @@ class RecipeRatingSerializer(serializers.ModelSerializer):
 
     your_rating = serializers.ChoiceField(choices=RecipeRating.rating.field.choices, source='rating')
     recipe_average_rating = serializers.SerializerMethodField()
-    user = serializers.ReadOnlyField(source='user.username')
+    rated_by = serializers.ReadOnlyField(source='user.username')
     is_user = serializers.SerializerMethodField()
     profile_id = serializers.ReadOnlyField(source='user.profile.id')
     profile_image = serializers.ReadOnlyField(source='user.profile.image.url')
@@ -16,6 +16,7 @@ class RecipeRatingSerializer(serializers.ModelSerializer):
         """
         Check if the request's user is the object's user, ensuring object is saved and request is authenticated.
         """
+        
         request = self.context.get('request')
         if hasattr(obj, 'pk') and request and hasattr(request, "user"):
             return obj.user == request.user
@@ -24,7 +25,7 @@ class RecipeRatingSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = RecipeRating
-        fields = ['id', 'recipe', 'user', 'created_at', 'updated_at', 'profile_image', 'is_user', 'profile_id', 'recipe_title', 'your_rating','recipe_average_rating']
+        fields = ['id', 'recipe', 'rated_by', 'created_at', 'updated_at', 'profile_image', 'is_user', 'profile_id', 'recipe_title', 'your_rating','recipe_average_rating']
 
     def get_recipe_average_rating(self, obj):
         return RecipeRating.calculate_average_for_recipe(obj.recipe_id)
