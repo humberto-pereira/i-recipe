@@ -3,6 +3,7 @@ from .models import Like
 from .serializers import LikeSerializer
 from i_recipe_api.permissions import IsOwnerOrReadOnly
 
+
 class LikeList(generics.ListCreateAPIView):
     """
     Api view to retrieve the list of all likes or create a new like
@@ -20,6 +21,7 @@ class LikeList(generics.ListCreateAPIView):
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
 
+
 class LikeDetail(generics.RetrieveDestroyAPIView):
     """
     Api view to retrieve, update or delete a like
@@ -30,5 +32,3 @@ class LikeDetail(generics.RetrieveDestroyAPIView):
     queryset = Like.objects.all()
     serializer_class = LikeSerializer
     permission_classes = [IsOwnerOrReadOnly]
-
-

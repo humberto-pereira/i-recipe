@@ -4,9 +4,10 @@ from .serializers import RecipeCommentsSerializer, RecipeCommentsDetailSerialize
 from i_recipe_api.permissions import IsOwnerOrReadOnly
 from django_filters.rest_framework import DjangoFilterBackend
 
+
 class RecipeCommentsList(generics.ListCreateAPIView):
     """
-    Api view to reteieve the list of all comments or create a new comment
+    Api view to retrieve the list of all comments or create a new comment
     Requires authentication
     Only authenticated users can create a new comment
     Unauthenticated users can view comments
@@ -24,6 +25,7 @@ class RecipeCommentsList(generics.ListCreateAPIView):
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
 
+
 class RecipeCommentsDetail(generics.RetrieveUpdateDestroyAPIView):
     """
     Api view to retrieve, update or delete a comment
@@ -34,5 +36,3 @@ class RecipeCommentsDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = RecipeComments.objects.all()
     serializer_class = RecipeCommentsDetailSerializer
     permission_classes = [IsOwnerOrReadOnly]
-
-    

@@ -2,6 +2,7 @@ from rest_framework import serializers
 from .models import Followers
 from django.db import IntegrityError
 
+
 class FollowersSerializer(serializers.ModelSerializer):
     user = serializers.ReadOnlyField(source='user.username')
     followed_name = serializers.ReadOnlyField(source='followed.username')
@@ -14,4 +15,5 @@ class FollowersSerializer(serializers.ModelSerializer):
         try:
             return super().create(validated_data)
         except IntegrityError:
-            raise serializers.ValidationError({'detail': 'You have already followed this user.'})
+            raise serializers.ValidationError(
+                {'detail': 'You have already followed this user.'})

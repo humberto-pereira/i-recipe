@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from .models import Message, Conversation
 from django.db.models import Q, Count
 
+
 class MessageSerializer(serializers.ModelSerializer):
     message_id = serializers.IntegerField(source='id', read_only=True)
     sender_username = serializers.ReadOnlyField(source='sender.username')
@@ -14,14 +15,19 @@ class MessageSerializer(serializers.ModelSerializer):
 
     def get_created_at(self, obj):
         return naturaltime(obj.created_at)
-    
+
     def get_updated_at(self, obj):
         return naturaltime(obj.updated_at)
 
     class Meta:
         model = Message
-        fields = ['message_id', 'sender', 'sender_username', 'recipient', 'recipient_username', 'body', 'created_at', 'updated_at', 'read', 'sender_profile_image', 'conversation']
-        read_only_fields = ('sender', 'created_at', 'updated_at', 'read', 'conversation')
+        fields = [
+                'message_id', 'sender', 'sender_username', 'recipient',
+                'recipient_username', 'body', 'created_at', 'updated_at',
+                'read', 'sender_profile_image', 'conversation'
+        ]
+        read_only_fields = ('sender', 'created_at', 'updated_at',
+                            'read', 'conversation')
 
     def get_sender_username(self, obj):
         return obj.sender.username
@@ -38,11 +44,13 @@ class MessageSerializer(serializers.ModelSerializer):
         sender = self.context['request'].user
         recipient = validated_data['recipient']
 
-        # Check if a conversation between these users already exists, considering both directions
+        # Check if a conversation between these users already exists,
+        # considering both directions
         conversation = Conversation.objects.annotate(
             total_participants=Count('participants')
         ).filter(
-            Q(participants=sender) & Q(participants=recipient) & Q(total_participants=2)
+            Q(participants=sender) & Q(participants=recipient)
+            & Q(total_participants=2)
         ).distinct().first()
 
         if not conversation:
@@ -61,8 +69,9 @@ class MessageSerializer(serializers.ModelSerializer):
         """
         validated_data.pop('sender', None)
         validated_data.pop('recipient', None)
-        
+
         return super().update(instance, validated_data)
+
 
 class ConversationSerializer(serializers.ModelSerializer):
     conversation_id = serializers.IntegerField(source='id', read_only=True)

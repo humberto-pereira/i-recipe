@@ -2,6 +2,7 @@ from rest_framework import generics, permissions
 from .models import Category
 from .serializers import CategorySerializer
 
+
 # List all categories or create a new one (admin only for creation)
 class CategoryListCreateView(generics.ListCreateAPIView):
     queryset = Category.objects.all()
@@ -15,6 +16,7 @@ class CategoryListCreateView(generics.ListCreateAPIView):
             return [permissions.AllowAny()]
         # For create operation (POST), require admin permissions
         return [permissions.IsAdminUser()]
+
 
 # Retrieve, update, or delete a category (admin only for update/delete)
 class CategoryRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):

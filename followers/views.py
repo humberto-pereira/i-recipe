@@ -3,6 +3,7 @@ from .models import Followers
 from .serializers import FollowersSerializer
 from i_recipe_api.permissions import IsOwnerOrReadOnly
 
+
 class FollowersList(generics.ListCreateAPIView):
     """
     Api view to retrieve the list of all followers or create a new follower

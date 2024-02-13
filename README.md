@@ -43,57 +43,171 @@ Backlog Adjustment: The product backlog was regularly updated based on retrospec
 
 ### User stories backlog
 
-#### Iteration 1 (Must have) (MVP)
+<p align="center">
+    <img src="readme_images/agile print screen/backlog.png" width=800>
+</p>
+
+#### Iteration 1
 
 #### Security and Account Management: Password Change API
-- As a back-end service, I can facilitate password changes so that users can maintain the security of their accounts. (Must have) (MVP)
+- As a back-end service, I can facilitate password changes so that users can maintain the security of their accounts. 
+- **(Must have) (MVP)**
+
+<p align="center">
+    <img src="readme_images/agile print screen/iteration 1/password_change_api.png" width=800>
+</p>
+
 #### Authentication and User Management: User Registration
 - As a back-end service, I can register new users so that users can become platform members.
-Authentication and User Management: User Authentication API. (Must have) (MVP)
+Authentication and User Management: User Authentication API. 
+- **(Must have) (MVP)**
+
+<p align="center">
+    <img src="readme_images/agile print screen/iteration 1/user_registration.png" width=800>
+</p>
+
 #### Authentication and User Management: User Authentication API
-- As a back-end service, I can authenticate users so that they can sign in and access platform functionalities. (Must have) (MVP)
+- As a back-end service, I can authenticate users so that they can sign in and access platform functionalities. 
+- **(Must have) (MVP)**
+
+<p align="center">
+    <img src="readme_images/agile print screen/iteration 1/user_authentication.png" width=800>
+</p>
+
 #### Authentication and User Management: User Profile API
-- As a back-end service, I can manage user profiles, including editing and updating profiles, so that users can have an identity on the platform. (Must have) (MVP)
+- As a back-end service, I can manage user profiles, including editing and updating profiles, so that users can have an identity on the platform.
+- **(Must have) (MVP)**
+
+<p align="center">
+    <img src="readme_images/agile print screen/iteration 1/user_profile_api.png" width=800>
+</p>
 
 #### Iteration 2
 
 #### Recipe Management and Interaction: Recipe Image Upload API
-- As a back-end service, I can support uploading and managing images for recipes so that users can illustrate their posts. (Must have) (MVP)
+- As a back-end service, I can support uploading and managing images for recipes so that users can illustrate their posts. 
+- **(Must have) (MVP)**
+
+<p align="center">
+    <img src="readme_images/agile print screen/iteration 2/recipe_image_upload.png" width=800>
+</p>
+
 #### Recipe Management and Interaction: Recipe Post API
-- As a back-end service, I can handle creating, reading, updating, and deleting (CRUD) recipe posts so that users can share, view, and manage their recipes. (Must have) (MVP)
+- As a back-end service, I can handle creating, reading, updating, and deleting (CRUD) recipe posts so that users can share, view, and manage their recipes. 
+- **(Must have) (MVP)**
+
+<p align="center">
+    <img src="readme_images/agile print screen/iteration 2/Recipe_post.png" width=800>
+</p>
 
 #### Iteration 3
 
 #### Recipe Management and Interaction: Recipe Comment API 
-- As a back-end service, I can manage comments on recipes, including posting, editing, and deleting comments, so that users can interact with recipes. (Must have)
+- As a back-end service, I can manage comments on recipes, including posting, editing, and deleting comments, so that users can interact with recipes. 
+- **(Must have)**
+
+<p align="center">
+    <img src="readme_images/agile print screen/iteration 3/recipe_comment.png" width=800>
+</p>
 
 #### Iteration 4
 
 #### Like API
-- As a back end service, I can create, retrieve, and delete a like so that users can access liked recipes, like a recipe, and delete a given like. (Must have)
+- As a back end service, I can create, retrieve, and delete a like so that users can access liked recipes, like a recipe, and delete a given like. 
+- **(Must have)**
+
+<p align="center">
+    <img src="readme_images/agile print screen/iteration 4/like_api.png" width=800>
+</p>
+
 #### Social Interaction: Follow System API
-- As a back-end service, I can manage follow relationships between users so that users can follow other profiles and keep up with their posts. (Must have)
+- As a back-end service, I can manage follow relationships between users so that users can follow other profiles and keep up with their posts. 
+- **(Must have)**
+
+<p align="center">
+    <img src="readme_images/agile print screen/iteration 4/follow_system api.png" width=800>
+</p>
 
 #### Iteration 5
 
 #### Content Discovery and Management: Search API
-- As a back-end service, I can provide search functionality so that users can easily find specific content. (Must have)
+- As a back-end service, I can provide search functionality so that users can easily find specific content. 
+- **(Must have)**
+
+<p align="center">
+    <img src="readme_images/agile print screen/iteration 5/search_api.png" width=800>
+</p>
+
 #### Content Discovery and Management: Recipe Sorting and Filtering API
-- As a back-end service, I can offer sorting and filtering options for recipes, such as by most recent or highest rated, so that users can find recipes according to their preferences. (Must have)
+- As a back-end service, I can offer sorting and filtering options for recipes, such as by most recent or highest rated, so that users can find recipes according to their preferences. 
+- **(Must have)**
+
+<p align="center">
+    <img src="readme_images/agile print screen/iteration 5/recipe_sorting_filtering.png" width=800>
+</p>
+
 #### Social Interaction: Popular Profiles API
-- As a back-end service, I can provide a list of popular profiles based on certain criteria (like number of followers) so that users can discover prominent members. (Must have)
+- As a back-end service, I can provide a list of popular profiles based on certain criteria (like number of followers) so that users can discover prominent members. 
+- **(Must have)**
+
+<p align="center">
+    <img src="readme_images/agile print screen/iteration 5/popular_profile.png" width=800>
+</p>
 
 #### Iteration 6
 
 #### Recipe Management and Interaction: Recipe Rating API
-- As a back-end service, I can manage ratings for recipes so that users can rate and find the most delicious recipes. (Should have)
+- As a back-end service, I can manage ratings for recipes so that users can rate and find the most delicious recipes. 
+- **(Should have)**
+
+<p align="center">
+    <img src="readme_images/agile print screen/iteration 6/recipe_rating.png" width=800>
+</p>
+
 #### User Message API
-- As a backend developer, I can build API endpoints to handle sending, receiving, and listing messages between users, so that the platform supports private user-to-user communication, fostering a vibrant and interactive community within the app. (Should have)
+- As a backend developer, I can build API endpoints to handle sending, receiving, and listing messages between users, so that the platform supports private user-to-user communication, fostering a vibrant and interactive community within the app. 
+- **(Should have)**
+
+<p align="center">
+    <img src="readme_images/agile print screen/iteration 6/user_message.png" width=800>
+</p>
+
 #### Recipe category API
-- As a backend developer, I can implement API endpoints to create, retrieve, update, and delete recipe categories, so that the frontend can offer users a categorized view and management of recipes, enhancing the app's organization and user experience. (Should have)
+- As a backend developer, I can implement API endpoints to create, retrieve, update, and delete recipe categories, so that the frontend can offer users a categorized view and management of recipes, enhancing the app's organization and user experience. 
+- **(Should have)**
+
+<p align="center">
+    <img src="readme_images/agile print screen/iteration 6/recipe_category.png" width=800>
+</p>
 
 #### Iteration 7
+- As a backend developer, I want to implement comprehensive API tests so that I can ensure the reliability, performance, and security of our APIs.
+- **(Must have ) (MVP)**
+<p align="center">
+    <img src="readme_images/agile print screen/iteration 7/api_teting.png" width=800>
+</p>
 
+#### some projects print screen shot during the project
+
+<p align="center">
+    <img src="readme_images/agile_projects_images/Screenshot 2024-01-27 at 21.26.01.png" width=800>
+</p>
+
+<p align="center">
+    <img src="readme_images/agile_projects_images/Screenshot 2024-01-27 at 21.26.10.png" width=800>
+</p>
+
+<p align="center">
+    <img src="readme_images/agile_projects_images/Screenshot 2024-01-28 at 23.32.51.png" width=800>
+</p>
+
+<p align="center">
+    <img src="readme_images/agile_projects_images/Screenshot 2024-01-29 at 21.02.20.png" width=800>
+</p>
+
+<p align="center">
+    <img src="readme_images/agile_projects_images/Screenshot 2024-01-29 at 21.02.38.png" width=800>
+</p>
 ### Data Model Design
 The structure of the data models was developed concurrently with the API endpoints, utilizing an entity-relationship diagram for planning.
 
@@ -327,6 +441,7 @@ Functionality: This intermediary model is crucial for supporting multi-user chat
 | `/messaging_message/` | Sends a message within a conversation. | POST | Create | List | `{ "conversation_id": int, "body": "string" }` |
 | `/messaging_message/{id}` | Retrieves, updates, or deletes a specific message. | GET, PUT, DELETE | Read, Update, Delete | Detail | For PUT: `{ "body": "string", "read": boolean }` |
 
+
 ### Frameworks
 - Django 3.2.22: A high-level Python Web framework that encourages rapid development and clean, pragmatic design.
 Django REST Framework 3.14.0: A powerful and flexible toolkit for building Web APIs in Django.
@@ -415,3 +530,98 @@ Note:
 - It's important to acknowledge that object IDs and specific data points may vary in the documentation compared to the live platform due to the dynamic nature of the testing environment, including object creation and deletion.
 
 - This manual testing phase was crucial in identifying potential issues, fine-tuning the platform's functionalities, and ensuring that the iRecipe API stands ready to support a vibrant and engaging culinary community.
+
+- for see the tests here is the link for the separate file [testing.md](/testing.md)
+
+### bugs
+
+#### Category Requirement in Recipe Posts:
+
+- Problem: The user was able to post a recipe without specifying a category, even though it was meant to be a required field.
+- Resolution: Modify the model to make the category field non-nullable and provide a default value or enforce validation to ensure a category is specified.
+
+#### Average Rating Calculation:
+
+- Problem: The average rating was not being displayed or calculated as expected.
+- Resolution: A method was introduced in the RecipeRating model to calculate and return the average rating for a recipe. This method was then utilized in the serializer to include the average rating in the API response.
+
+#### Displaying Rating Options in the Frontend:
+
+- Problem: Difficulty in displaying dropdown menu options (ratings 1 to 5) in the RecipeRating list view.
+- Resolution: Adjustments were made in the serializer to ensure the rating field correctly provided the dropdown options by using serializers.ChoiceField with the appropriate choices.
+
+#### Handling Duplicate Ratings:
+
+- Problem: An IntegrityError was encountered when trying to rate a recipe that had already been rated by the same user.
+- Resolution: The perform_create method in the RecipeRatingList view was modified to check for an existing rating by the same user for the same recipe and raise a validation error if found.
+
+#### Dynamic Message for 'Not Found' Errors:
+
+- Problem: The default 'Not found.' detail message in DRF was deemed too generic for certain scenarios.
+- Resolution: The get_object method in views was customized to raise a NotFound exception with a more descriptive error message when applicable.
+
+#### Access Control for Conversations and Messages:
+
+- Problem: Users could view conversations or messages not belonging to them.
+- Resolution: Permission checks were added in the conversation and message views to ensure that only participants of a conversation or senders/recipients of a message could access them.
+
+All custom files were validate using the [Code Institute Python Linter](https://pep8ci.herokuapp.com/):
+
+The following files were validate
+- models.py
+- serializers.py
+- urls.py
+- views.py
+- permissions.py
+
+from:
+ - followers app: **no errors found**
+ - i_recipe_api app **no errors found**
+ - likes app **no errors found**
+ - messaging app **no errors found**
+ - profiles app **no errors found**
+ - recipe_category app **no errors found**
+ - recipe_comments app **no errors found**
+ - recipe_posts app **no errors found**
+ - recipe_rating **no errors found**
+ 
+ ## Deployment
+
+ The i-recipe_api id deployed to Heroku, using ElephantSQL Postgres database. Steps to deploy to Heroku:
+
+#### GitHub Setup:
+
+- Create a fork or clone this repository using GitHub.
+- Cloudinary Setup for Images:
+
+- Sign up or log into Cloudinary.
+- Navigate to the dashboard and copy the 'API Environment variable' starting from cloudinary://. Keep this information secure as it will be used shortly.
+
+#### Heroku Deployment:
+
+- Log into Heroku and create a new app by selecting 'Create new app' in the 'New' menu.
+- Choose a name for your app and set the region.
+- In the 'Settings' section of your Heroku dashboard, reveal config vars and add your environment variables:
+- CLOUDINARY_URL: Paste the Cloudinary URL saved earlier.
+- DATABASE_URL: This will be added after setting up ElephantSQL.
+- SECRET_KEY: A secret key of your choosing.
+- ALLOWED_HOSTS: Your Heroku app URL without the https:// prefix.
+
+#### ElephantSQL Database Setup:
+
+- Sign into ElephantSQL and create a new instance.
+- Select the 'Tiny Turtle' plan (free tier) and choose a data center closest to you.
+- Copy the ElephantSQL database URL (starts with postgres://) to your clipboard.
+- Add this URL as the DATABASE_URL in your Heroku app's config vars.
+
+#### Deploying Your App:
+
+- Go to the 'Deploy' section in Heroku, select GitHub as the deployment method, and connect to your GitHub repository.
+- Optionally, enable automatic deploys from the main branch for continuous deployment.
+- Use the 'Manual Deploy' section to deploy your app by selecting the main branch and clicking 'Deploy Branch'.
+
+Credits
+
+- Code Institute Django Rest Framework walk through. The profiles, recipe_posts, recipe_comments, followers, likes where based in the Code Institute DRF walkthrough adapted to the needs and characteristics of the project; recipe_rating, recipe_category, messaging, and conversation is 100% custom-developed with knowledge acquired in this journey. [Code Institute](https://learn.codeinstitute.net/ci_program/diplomainsoftwaredevelopmentadvancedfrontend)
+- The detailed guides on creating RESTful APIs provided by Django REST Framework Documentation: [Django REST Framework Documentation:](https://www.django-rest-framework.org/)
+- The vast repository of knowledge on Stack Overflow and other developer forums that offered solutions and advice for numerous challenges encountered during development: [Stack Overflow](https://stackoverflow.com/)

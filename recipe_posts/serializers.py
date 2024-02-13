@@ -3,6 +3,7 @@ from rest_framework import serializers
 from .models import RecipePosts
 from likes.models import Like
 
+
 class RecipePostsSerializer(serializers.ModelSerializer):
     user = serializers.ReadOnlyField(source='user.username')
     is_user = serializers.SerializerMethodField()
@@ -14,23 +15,27 @@ class RecipePostsSerializer(serializers.ModelSerializer):
     def get_is_user(self, obj):
         request = self.context.get('request')
         return request.user == obj.user
-    
+
     def get_like_id(self, obj):
         user = self.context['request'].user
         if user.is_authenticated:
             like = Like.objects.filter(user=user, post=obj).first()
             return like.id if like else None
         return None
-    
+
     def get_average_rating(self, obj):
-        average = obj.ratings.aggregate(average_rating=Avg('rating'))['average_rating'] or 0.0
+        average = obj.ratings.aggregate(
+            average_rating=Avg('rating'))['average_rating'] or 0.0
         return round(average, 1) if average else None
-    
+
     class Meta:
         model = RecipePosts
         fields = [
-            'id', 'user', 'created_at', 'updated_at', 'title', 'content', 'profile_image', 'is_user', 'profile_id', 'image', 'tags', 'like_id', 'category', 'average_rating'
+            'id', 'user', 'created_at', 'updated_at', 'title', 'content',
+            'profile_image', 'is_user', 'profile_id', 'image', 'tags',
+            'like_id', 'category', 'average_rating'
         ]
+
 
 class RecipePostWithRatingSerializer(RecipePostsSerializer):
     avg_rating = serializers.SerializerMethodField()
