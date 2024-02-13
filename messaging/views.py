@@ -1,10 +1,11 @@
 from django.db.models import Q
-from rest_framework import generics, permissions, status
+from rest_framework import generics, permissions
 from .models import Message, Conversation
 from .serializers import MessageSerializer, ConversationSerializer
 from django.utils import timezone
 from datetime import timedelta
-from rest_framework.exceptions import PermissionDenied
+from rest_framework.exceptions import PermissionDenied, NotFound
+from rest_framework.views import status
 
 class MessageListView(generics.ListCreateAPIView):
     serializer_class = MessageSerializer
@@ -29,14 +30,21 @@ class MessageDetailView(generics.RetrieveUpdateDestroyAPIView):
         return Message.objects.filter(Q(sender=user) | Q(recipient=user))
 
     def get_object(self):
-        obj = super().get_object()
-        # Allow both sender and recipient to read the message
-        # Only raise PermissionDenied if a non-sender tries to update or delete
-        if self.request.method == 'GET' and obj.recipient == self.request.user and not obj.read:
+        queryset = self.filter_queryset(self.get_queryset())
+        filter_kwargs = {self.lookup_field: self.kwargs[self.lookup_field]}
+        obj = queryset.filter(**filter_kwargs).first()
+        if not obj:
+            # Custom message for not found
+            raise NotFound(detail="Message does not exist or you do not have permission to view it.", code=status.HTTP_404_NOT_FOUND)
+
+        # Perform permission checks for update/delete actions
+        if self.request.method in ['PUT', 'PATCH', 'DELETE']:
+            if obj.sender != self.request.user:
+                raise PermissionDenied("You do not have permission to modify or delete this message.")
+        elif self.request.method == 'GET' and obj.recipient == self.request.user and not obj.read:
             obj.read = True
             obj.save()
-        elif self.request.method in ['PUT', 'PATCH', 'DELETE'] and obj.sender != self.request.user:
-            raise PermissionDenied("You do not have permission to modify or delete this message.")
+
         return obj
 
     def perform_update(self, serializer):

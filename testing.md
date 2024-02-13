@@ -138,3 +138,199 @@ category deleted successfully:
 ## Conversation
 
 #### test 1
+When attempting to to list a conversation owned by the logged in sender or recipient:
+- list successful
+
+**Result: PASS**
+
+<p align="center">
+    <img src="readme_images/conversation_list_detail/conversation_list_2_successful.png" width=800>
+</p>
+
+**Result: PASS**
+
+<p align="center">
+    <img src="readme_images/conversation_list_detail/conversation_list_successful.png" width=800>
+</p>
+
+**Result: PASS**
+
+<p align="center">
+    <img src="readme_images/conversation_list_detail/conversation_list_owned_conversation.png" width=800>
+</p>
+
+#### test 2
+When user that does not own conversations, attempt to list: "users can only retrieve conversations owned by hin"
+list return null: successful
+
+
+**Result: PASS**
+
+<p align="center">
+    <img src="readme_images/conversation_list_detail/conversation_own_no_conversations.png" width=800>
+</p>
+
+#### test 3
+When attempt to retrieve conversation detail by id:
+detail retrieve: successful
+
+**Result: PASS**
+
+<p align="center">
+    <img src="readme_images/conversation_list_detail/conversation_deatail_retrive_by_conversation_id_successful.png" width=800>
+</p>
+
+#### test 4
+When attempt to retrieve conversation detail not owned by logged in user:
+message: "you do not have permission to view this conversation"
+
+**Result: PASS**
+
+<p align="center">
+    <img src="readme_images/conversation_list_detail/conversation_try_to-retrive_not_owned_conversation_denied.png" width=800>
+</p>
+
+#### test 5
+When attempt to list or retrieve conversation detail not logged in:
+message: "authentication credentials were not provided"
+
+**Result: PASS**
+
+<p align="center">
+    <img src="readme_images/conversation_list_detail/conversation_detail_retrieve_ not_athenticated_denied.png" width=800>
+</p>
+
+**Result: PASS**
+
+<p align="center">
+    <img src="readme_images/conversation_list_detail/conversation_list_not_authenticated_denied.png" width=800>
+</p>
+
+## followers
+
+#### test 1
+When attempting to list the followers list:
+list successful
+
+**Result: PASS**
+
+<p align="center">
+    <img src="readme_images/followers_list_detail/followers_list.png" width=800>
+</p>
+
+#### test 2
+When attempting to retrieve follower detail by id:
+deatail successful
+
+**Result: PASS**
+
+<p align="center">
+    <img src="readme_images/followers_list_detail/followers_retrieve_by_id_successful.png" width=800>
+</p>
+
+#### test 3
+When attempting to follow a profile:
+follow successful
+
+**Result: PASS**
+
+<p align="center">
+    <img src="readme_images/followers_list_detail/followers_a_profile_successful.png" width=800>
+</p>
+
+#### test 4
+When attempting to unfollow a profile:
+unfollow successful
+
+**Result: PASS**
+
+<p align="center">
+    <img src="readme_images/followers_list_detail/followers_unfollow_successful.png" width=800>
+</p>
+
+#### test 5
+when retrieve followers detail followed:null unfollow 'delete' option not present
+unfollow 'delete' option not present: successful
+
+**Result: PASS**
+
+<p align="center">
+    <img src="readme_images/followers_list_detail/followed_null_delete_not_present.png" width=800>
+</p>
+
+## like
+
+#### test 1
+When attempting to like a recipe:
+like successful
+
+**Result: PASS**
+
+<p align="center">
+    <img src="readme_images/like_list_detail/like_successful.png" width=800>
+</p>
+
+#### test 2
+when attempting to unlike 'delete' a recipe:
+unlike successful
+
+**Result: PASS**
+
+<p align="center">
+    <img src="readme_images/like_list_detail/like_delete_successful.png" width=800>
+</p>
+
+#### test 3
+when not like owner 'no delete' unlike
+unlike 'delete' not present successful
+
+**Result: PASS**
+
+<p align="center">
+    <img src="readme_images/like_list_detail/lilke_not_owner_nodelete.png" width=800>
+</p>
+
+## messages
+
+#### test 1
+when attempting to send a message:
+message sent: successful
+
+**Result: PASS**
+
+<p align="center">
+    <img src="readme_images/message_list_detail/messages_send_message_successful.png" width=800>
+</p>
+
+#### test 2
+When accessing message read status from: false to true:
+message read status: true successful
+
+**Result: PASS**
+
+<p align="center">
+    <img src="readme_images/message_list_detail/messages_read_true.png" width=800>
+</p>
+
+#### test 3
+when answering a message:
+answer received: successful
+
+**Result: PASS**
+
+<p align="center">
+    <img src="readme_images/message_list_detail/message_answer_recived.png" width=800>
+</p>
+
+#### test 4
+when attempt to delete a message owned by logged in user:
+delete: successful
+
+**Result: PASS**
+
+<p align="center">
+    <img src="readme_images/message_list_detail/message_delete_successful.png" width=800>
+</p>
+
+#### test 5
+
