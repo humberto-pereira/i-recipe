@@ -57,6 +57,11 @@ class ConversationListView(generics.ListAPIView):
     permission_classes = [permissions.IsAuthenticated]  # Ensure only authenticated users can access this view
 
     def get_queryset(self):
+        # Ensure only authenticated users can see their conversations
+        user = self.request.user
+        return Conversation.objects.filter(participants__in=[user]).distinct()
+
+    def get_queryset(self):
         # Check if the user is authenticated
         user = self.request.user
         if user.is_authenticated:
@@ -69,7 +74,12 @@ class ConversationListView(generics.ListAPIView):
 class ConversationDetailView(generics.RetrieveAPIView):
     queryset = Conversation.objects.all()
     serializer_class = ConversationSerializer
-    # Add permission_classes as needed
+    permission_classes = [permissions.IsAuthenticated]
 
-    def get_queryset(self):
-        return Conversation.objects.all()
+    def get_object(self):
+        # Retrieve the conversation object
+        conversation = super().get_object()
+        user = self.request.user
+        if user not in conversation.participants.all():
+            raise PermissionDenied("You do not have permission to view this conversation.")
+        return conversation
