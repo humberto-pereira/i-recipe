@@ -1,0 +1,9 @@
+.Active i {
+    color: rgb( 247 53 0);
+}
+
+.NavLink {
+    padding: 7px;
+    color: rgb(0 0 0);
+    font-weight: 800;
+}
