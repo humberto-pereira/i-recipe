@@ -1,0 +1,41 @@
+.App {
+    font-family: "Lato", sans-serif;
+    background-color: rgb(231, 232, 239);
+    min-height: 100vh;
+}
+
+.Main {
+    padding-top: 83px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+a {
+    color: #555555;
+    transition: color ease-in-out 0.3s;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+a:hover i {
+    color: rgb(247 53 0);
+    transition: color ease-in-out 0.3s;
+}
+
+i {
+    color: #101011;
+    font-size: 1.6rem;
+    padding: 7px;
+    vertical-align: middle;
+}
+
+i:hover {
+    cursor: pointer;
+    transition: color ease-in-out 0.3s;
+    color: #616367;
+}
+
