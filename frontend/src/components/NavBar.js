@@ -1,12 +1,13 @@
-import React, { useContext } from 'react';
-import { Navbar, Nav, NavDropdown, Form, FormControl, Button, Container } from 'react-bootstrap';
+import React from 'react';
+import { Navbar, Nav, Form, FormControl, Button, Container } from 'react-bootstrap';
 import irecipe_logo from '../assets/irecipe_logo.png';
 import styles from '../styles/NavBar.module.css';
 import { NavLink } from 'react-router-dom';
-import { CurrentUserContext } from '../App';
+import { useCurrentUser } from '../contexts/CurrentUserContext';
 
 const NavBar = () => {
-    const currentUser = useContext(CurrentUserContext);
+    const currentUser = useCurrentUser();
+    
     const loggedInIcons = <>{currentUser?.username}</>
     const loggedOutIcons = ( 
         <> 
