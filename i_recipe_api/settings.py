@@ -60,9 +60,9 @@ REST_AUTH_SERIALIZERS = {
 SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = 'DEV' in os.environ
+DEBUG = 'DEBUG' in os.environ
 
-ALLOWED_HOSTS = ['127.0.0.1', os.environ.get("ALLOWED_HOST")]
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', os.environ.get("ALLOWED_HOST")]
 
 
 # Application definition
@@ -110,14 +110,9 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-if 'CLIENT_ORIGIN' in os.environ:
-    CORS_ALLOWED_ORIGINS = [
-        os.environ.get('CLIENT_ORIGIN')
-    ]
-else:
-    # For local development
-    CORS_ALLOWED_ORIGINS = [
-        "http://localhost:3000", #Frontend server
+
+CORS_ALLOWED_ORIGINS = [
+        os.environ.get("CLIENT_ORIGIN") #Frontend server
     ]
 
 CORS_ALLOW_CREDENTIALS = True

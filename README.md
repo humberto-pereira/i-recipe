@@ -4,6 +4,8 @@
 
 #### The primary goal of this project is to create a comprehensive platform that enables users to share, discover, and engage with a wide variety of recipes from around the world. By leveraging a robust backend built with Django and a PostgreSQL database hosted on ElephantSQL, the platform aims to offer a rich user experience through the following key features:
 
+* [Testing](#testing)
+
 #### Recipe Management
 1) Share Recipes: Users can post their recipes, including details such as title, content, category, tags for cuisine types, and images.
 2) Discover Recipes: A searchable and filterable list of recipes allows users to discover new dishes based on categories, tags, and ratings.
@@ -187,7 +189,8 @@ Authentication and User Management: User Authentication API.
     <img src="readme_images/agile print screen/iteration 7/api_teting.png" width=800>
 </p>
 
-#### some projects print screen shot during the project
+### some projects print screen shot during the project
+
 
 <p align="center">
     <img src="readme_images/agile_projects_images/Screenshot 2024-01-27 at 21.26.01.png" width=800>
@@ -491,6 +494,10 @@ distlib 0.3.7, filelock 3.12.4, packaging 23.2, platformdirs 3.11.0, pytz 2023.3
 #### Deployment
 - gunicorn 21.2.0: A Python WSGI HTTP Server for UNIX, used for deploying Python web applications.
 
+## Testing
+
+- for see the tests here is the link for the separate file [testing.md](/testing.md)
+
 ### iRecipe API Manual Testing
 
 - Introduction
@@ -622,6 +629,6 @@ from:
 
 Credits
 
-- Code Institute Django Rest Framework walk through. The profiles, recipe_posts, recipe_comments, followers, likes where based in the Code Institute DRF walkthrough adapted to the needs and characteristics of the project; recipe_rating, recipe_category, messaging, and conversation is 100% custom-developed with knowledge acquired in this journey. [Code Institute](https://learn.codeinstitute.net/ci_program/diplomainsoftwaredevelopmentadvancedfrontend)
+- Code Institute Django Rest Framework walk through. The profiles, recipe_posts, recipe_comments, followers, likes apps where based in the Code Institute DRF walkthrough adapted to the needs and characteristics of the project; recipe_rating, recipe_category, messaging, and conversation apps is 100% custom-developed with knowledge acquired in this journey. [Code Institute](https://learn.codeinstitute.net/ci_program/diplomainsoftwaredevelopmentadvancedfrontend)
 - The detailed guides on creating RESTful APIs provided by Django REST Framework Documentation: [Django REST Framework Documentation:](https://www.django-rest-framework.org/)
 - The vast repository of knowledge on Stack Overflow and other developer forums that offered solutions and advice for numerous challenges encountered during development: [Stack Overflow](https://stackoverflow.com/)
