@@ -26,7 +26,7 @@ const NavBar = () => {
     const addPostIcon = (
         <NavLink className={styles.NavLink} 
             activeClassName={styles.Active} 
-            to="/posts/create" 
+            to="/recipe-posts/create" 
             >
                 <i class="fas fa-plus"></i> Add a recipe post
             </NavLink>
