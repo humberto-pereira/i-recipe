@@ -3,6 +3,11 @@
 }
 
 .NavLink {
-    padding: 7px;
+    padding: 3px;
     color: rgb(0 0 0);
+    object-fit: cover;
+}
+
+.container {
+    margin: 5px !important;
 }
