@@ -94,8 +94,8 @@ class RecipePosts(models.Model):
         ('wraps', 'Wraps')
     ]
 
-    category = models.ForeignKey(Category, on_delete=models.SET_DEFAULT,
-                                 default=10, null=False, blank=False,
+    category = models.ForeignKey(Category, on_delete=models.SET_NULL,
+                                 null=True, blank=True,
                                  related_name='recipe_posts')
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)  # auto_now_add=True

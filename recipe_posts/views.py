@@ -5,7 +5,11 @@ from rest_framework import generics, permissions, filters
 from django_filters.rest_framework import DjangoFilterBackend
 from .models import RecipePosts
 from .serializers import RecipePostsSerializer, RecipePostWithRatingSerializer
+from django.http import JsonResponse
+import logging
 
+# Set up logging
+logger = logging.getLogger(__name__)
 
 class RecipePostsList(generics.ListCreateAPIView):
     serializer_class = RecipePostsSerializer
@@ -31,6 +35,7 @@ class RecipePostsList(generics.ListCreateAPIView):
         return queryset
 
     def perform_create(self, serializer):
+        logger.debug(f"Received POST data: {self.request.data}")
         serializer.save(user=self.request.user)
 
 
@@ -44,3 +49,8 @@ class RecipePostsDetail(generics.RetrieveUpdateDestroyAPIView):
             comments_count=Count('recipe_comments', distinct=True),
             average_rating=Avg('ratings__rating')
         )
+
+def tag_choices(request):
+    # Convert the choices tuple to a dictionary for easier JSON serialization
+    choices_dict = {tag: label for tag, label in RecipePosts.tag_choices}
+    return JsonResponse(choices_dict, safe=False)

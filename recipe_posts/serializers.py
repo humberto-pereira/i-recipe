@@ -35,6 +35,7 @@ class RecipePostsSerializer(serializers.ModelSerializer):
             'profile_image', 'is_user', 'profile_id', 'image', 'tags',
             'like_id', 'category', 'average_rating'
         ]
+        extra_kwargs = {'category': {'required': False, 'allow_null': True}}
 
 
 class RecipePostWithRatingSerializer(RecipePostsSerializer):
