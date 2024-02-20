@@ -7,6 +7,7 @@ import { Route, Switch } from 'react-router-dom';
 import SignUpForm from './pages/auth/SignUpForm';
 import SignInForm from './pages/auth/SignInForm';
 import PostCreateForm from './pages/recipe-posts/PostCreateForm';
+import RecipePostPage from './pages/recipe-posts/RecipePostPage';
 
 
 
@@ -23,6 +24,7 @@ function App() {
           <Route exact path="/signin" render={() => <SignInForm />} />
           <Route exact path="/signup" render={() => <SignUpForm />} />
           < Route exact path="/recipe-posts/create" render={() => <PostCreateForm />} />
+          <Route exact path="/recipe-posts/:id" render={() => <RecipePostPage />} />
           <Route render={() => <h3>Page not found!</h3>} />
         </Switch>
       </Container>
