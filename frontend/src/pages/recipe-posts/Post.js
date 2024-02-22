@@ -26,8 +26,9 @@ const Post = (props) => {
         const fetchRatings = async () => {
             try {
                 const { data } = await axios.get(`/ratings/?recipe=${id}`);
+                console.log('Fetched ratings data:', data); // Log fetched data
                 const currentRecipeRatings = data.results.filter(rating => rating.recipe === id);
-
+    
                 // find if the current user has rated this recipe.
                 const userRatingData = currentRecipeRatings.find(rating => rating.is_user);
                 if (userRatingData) {
@@ -39,14 +40,16 @@ const Post = (props) => {
                     const avgRating = currentRecipeRatings.length ? currentRecipeRatings[0].recipe_average_rating : null;
                     setAverageRating(avgRating);
                 }
+                console.log('User rating:', userRatingData ? userRatingData.your_rating : 'Not rated by user'); // Log user rating
+                console.log('Average rating:', averageRating); // Log average rating
             } catch (err) {
                 console.error("Failed to fetch ratings:", err);
             }
         };
-
+    
         fetchRatings();
     }, [id, currentUser]);
-
+    
     const handleRating = async (rating) => {
         if (!currentUser) {
             alert("Please log in to rate.");
@@ -56,16 +59,17 @@ const Post = (props) => {
             alert("You have already rated this recipe.");
             return;
         }
-
+    
         try {
             const method = userRating ? "patch" : "post";
             const response = await axios[method](`/ratings/${userRating ? userRating.id : ''}`, {
                 recipe: id,
                 your_rating: rating, // The rating the user wants to give
             });
-
+    
             setUserRating(rating);
             setAverageRating(response.data.recipe_average_rating);
+            console.log('Rating submission successful:', response.data); // Log successful rating submission
             alert("You rated this recipe successfully.");
         } catch (error) {
             console.error("Rating submission error:", error);
@@ -76,15 +80,16 @@ const Post = (props) => {
             }
         }
     };
-
+    
     const renderStars = () => {
-        // Use averageRating directly for displaying stars
-        const ratingToShow = averageRating || 0; // Default to 0 if averageRating is not available
+        // Default to 0 if no rating is available
+        const ratingToShow = typeof userRating === 'number' ? userRating : averageRating || 0;
+        console.log('Rating to show with stars:', ratingToShow); // Log rating used for displaying stars
     
         return [1, 2, 3, 4, 5].map(star => (
             <i key={star}
                 className={`fa fa-star ${star <= ratingToShow ? "checked" : ""}`}
-                onClick={() => userRating === null && handleRating(star)}
+                onClick={() => handleRating(star)}
                 style={{
                     cursor: userRating === null ? "pointer" : "default",
                     color: star <= ratingToShow ? "#ffc107" : "#e4e5e9",
