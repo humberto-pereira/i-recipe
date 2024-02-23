@@ -1,6 +1,6 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import { useParams, useHistory } from "react-router-dom";
 import axios from "axios";
-import { useHistory } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
@@ -10,12 +10,11 @@ import styles from "../../styles/PostCreateEditForm.module.css";
 import appStyles from "../../App.module.css";
 import btnStyles from "../../styles/Button.module.css";
 import Asset from "../../components/Asset";
+import { axiosReq } from "../../api/axiosDefaults";
 import { Image } from "react-bootstrap";
 
-function PostCreateForm() {
-    const [errors, setErrors] = useState({});
-    const [categories, setCategories] = useState([]);
-    const [tags, setTags] = useState([]);
+function PostEditForm() {
+    
 
     const [postData, setPostData] = useState({
         title: "",
@@ -25,32 +24,41 @@ function PostCreateForm() {
         tag: "",
     });
     const { title, content, image, category, tag } = postData;
-
-    const imageInput = useRef(null);
+    
+    const [categories, setCategories] = useState([]);
+    const [tags, setTags] = useState([]);
+    const [errors, setErrors] = useState({});
+    const { id } = useParams();
     const history = useHistory();
+    const imageInput = useRef(null);
 
     useEffect(() => {
-        async function fetchCategoriesAndTags() {
+        const fetchPostAndData = async () => {
             try {
+                const { data } = await axiosReq.get(`/recipe-posts/${id}/`);
                 const categoriesResponse = await axios.get("/categories/");
-                setCategories(categoriesResponse.data.results);
-
                 const tagsResponse = await axios.get("/tag-choices/");
-                // Directly transform tagsResponse.data into an array of objects for easier mapping
-                const tagsArray = Object.entries(tagsResponse.data).map(([key, value]) => ({
-                    value: key,
-                    label: value,
-                }));
-                setTags(tagsArray);
-            } catch (err) {
-                console.error("Error fetching categories or tags:", err);
-                setCategories([]);
-                setTags([]);
-            }
-        }
+                setCategories(categoriesResponse.data.results);
+                setTags(Object.entries(tagsResponse.data).map(([value, label]) => ({ value, label })));
 
-        fetchCategoriesAndTags();
-    }, []);
+                if (data.is_user) {
+                    setPostData({
+                        title: data.title,
+                        content: data.content,
+                        image: data.image,
+                        category: data.category?.toString(),
+                        tag: data.tags?.toString(),
+                    });
+                } else {
+                    history.push("/");
+                }
+            } catch (err) {
+                console.log(err);
+            }
+        };
+
+        fetchPostAndData();
+    }, [id, history]);
 
     const handleChange = (event) => {
         setPostData({
@@ -61,7 +69,7 @@ function PostCreateForm() {
 
     const handleChangeImage = (event) => {
         if (event.target.files.length) {
-            URL.revokeObjectURL(image);
+            URL.revokeObjectURL(postData.image);
             setPostData({
                 ...postData,
                 image: URL.createObjectURL(event.target.files[0]),
@@ -72,16 +80,17 @@ function PostCreateForm() {
     const handleSubmit = async (event) => {
         event.preventDefault();
         const formData = new FormData();
-
-        formData.append("title", title);
-        formData.append("content", content);
-        formData.append("category", category);
-        formData.append("tags", tag);
-        formData.append("image", imageInput.current.files[0]);
+        formData.append("title", postData.title);
+        formData.append("content", postData.content);
+        formData.append("category", postData.category);
+        formData.append("tags", postData.tag);
+        if (imageInput.current.files[0]) {
+            formData.append("image", imageInput.current.files[0]);
+        }
 
         try {
-            const { data } = await axios.post("/recipe-posts/", formData);
-            history.push(`/recipe-posts/${data.id}`);
+            await axiosReq.put(`/recipe-posts/${id}/`, formData);
+            history.push(`/recipe-posts/${id}`);
         } catch (err) {
             console.log(err);
             if (err.response?.status !== 401) {
@@ -203,4 +212,5 @@ function PostCreateForm() {
     );
 }
 
-export default PostCreateForm;
+
+export default PostEditForm;

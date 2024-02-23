@@ -3,9 +3,10 @@ import axios from "axios";
 import { useCurrentUser } from "../../contexts/CurrentUserContext";
 import styles from "../../styles/Post.module.css";
 import { Card, Media, OverlayTrigger, Tooltip } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import Avatar from "../../components/Avatar";
 import { axiosRes } from "../../api/axiosDefaults";
+import { MoreDropdown } from "../../components/MoreDropdown";
 
 //working version
 //working version
@@ -16,6 +17,21 @@ const Post = (props) => {
     const [userRating, setUserRating] = useState(null);
     const [averageRating, setAverageRating] = useState(null);
     const is_owner = currentUser?.username === user;
+    const history = useHistory();
+
+    const handleEdit = () => {
+        history.push(`/recipe-posts/${id}/edit`);
+    };
+
+    const handleDelete = async () => {
+        try {
+            await axiosRes.delete(`/recipe-posts/${id}/`);
+            history.goBack();
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
 
 
     useEffect(() => {
@@ -28,7 +44,7 @@ const Post = (props) => {
                 const { data } = await axios.get(`/ratings/?recipe=${id}`);
                 console.log('Fetched ratings data:', data); // Log fetched data
                 const currentRecipeRatings = data.results.filter(rating => rating.recipe === id);
-    
+
                 // find if the current user has rated this recipe.
                 const userRatingData = currentRecipeRatings.find(rating => rating.is_user);
                 if (userRatingData) {
@@ -46,10 +62,10 @@ const Post = (props) => {
                 console.error("Failed to fetch ratings:", err);
             }
         };
-    
+
         fetchRatings();
     }, [id, currentUser]);
-    
+
     const handleRating = async (rating) => {
         if (!currentUser) {
             alert("Please log in to rate.");
@@ -59,14 +75,14 @@ const Post = (props) => {
             alert("You have already rated this recipe.");
             return;
         }
-    
+
         try {
             const method = userRating ? "patch" : "post";
             const response = await axios[method](`/ratings/${userRating ? userRating.id : ''}`, {
                 recipe: id,
                 your_rating: rating, // The rating the user wants to give
             });
-    
+
             setUserRating(rating);
             setAverageRating(response.data.recipe_average_rating);
             console.log('Rating submission successful:', response.data); // Log successful rating submission
@@ -80,12 +96,12 @@ const Post = (props) => {
             }
         }
     };
-    
+
     const renderStars = () => {
         // Default to 0 if no rating is available
         const ratingToShow = typeof userRating === 'number' ? userRating : averageRating || 0;
         console.log('Rating to show with stars:', ratingToShow); // Log rating used for displaying stars
-    
+
         return [1, 2, 3, 4, 5].map(star => (
             <i key={star}
                 className={`fa fa-star ${star <= ratingToShow ? "checked" : ""}`}
@@ -105,31 +121,25 @@ const Post = (props) => {
             setPosts((prevPosts) => ({
                 ...prevPosts,
                 results: prevPosts.results.map((post) => {
-                    if (post.id === id) {
-                        // Ensure likes_count is treated as a number, defaulting to 0 if undefined
-                        const updatedLikesCount = (post.likes_count || 0) + 1;
-                        return { ...post, likes_count: updatedLikesCount, like_id: data.id };
-                    }
-                    return post;
+                    return post.id === id
+                        ? { ...post, likes_count: post.likes_count + 1, like_id: data.id }
+                        : post;
                 }),
             }));
         } catch (err) {
             console.log(err);
         }
     };
-    
+
     const handleUnlike = async () => {
         try {
             await axiosRes.delete(`/likes/${like_id}/`);
             setPosts((prevPosts) => ({
                 ...prevPosts,
                 results: prevPosts.results.map((post) => {
-                    if (post.id === id) {
-                        // Ensure likes_count is treated as a number, defaulting to 0 if undefined
-                        const updatedLikesCount = (post.likes_count || 1) - 1;
-                        return { ...post, likes_count: updatedLikesCount, like_id: null };
-                    }
-                    return post;
+                    return post.id === id
+                        ? { ...post, likes_count: post.likes_count - 1, like_id: null }
+                        : post;
                 }),
             }));
         } catch (err) {
@@ -149,7 +159,10 @@ const Post = (props) => {
                     </Link>
                     <div className="d-flex align-items-center">
                         <span>{updated_at}</span>
-                        {is_owner && postPage && "..."}
+                        {is_owner && postPage && <MoreDropdown
+                            handleEdit={handleEdit}
+                            handleDelete={handleDelete}
+                        />}
                     </div>
                 </Media>
             </Card.Body>
@@ -172,11 +185,11 @@ const Post = (props) => {
                             <i className="far fa-heart" />
                         </OverlayTrigger>
                     ) : like_id ? (
-                        <span onClick={(handleUnlike)}>
+                        <span onClick={handleUnlike}>
                             <i className={`fas fa-heart ${styles.Heart}`} />
                         </span>
                     ) : currentUser ? (
-                        <span onClick={(handleLike)}>
+                        <span onClick={handleLike}>
                             <i className={`far fa-heart ${styles.HeartOutline}`} />
                         </span>
                     ) : (
@@ -188,7 +201,7 @@ const Post = (props) => {
                         </OverlayTrigger>
                     )}
                     {likes_count}
-                    <Link to={`/posts/${id}`}>
+                    <Link to={`/recipe-posts/${id}`}>
                         <i className="far fa-comments" />
                     </Link>
                     {comments_count}

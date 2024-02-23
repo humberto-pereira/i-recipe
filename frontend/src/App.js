@@ -9,6 +9,7 @@ import SignInForm from './pages/auth/SignInForm';
 import PostCreateForm from './pages/recipe-posts/PostCreateForm';
 import RecipePostPage from './pages/recipe-posts/RecipePostPage';
 import PostsPage from './pages/recipe-posts/PostsPage';
+import PostEditForm from './pages/recipe-posts/PostEditForm';
 import { useCurrentUser } from './contexts/CurrentUserContext';
 
 
@@ -36,16 +37,18 @@ function App() {
                 filter={`user__followed__user__profile=${profile_id}&`} />
             )}
           />
-          <Route exact path="/favorites"
+          <Route exact path="/likes"
             render={() => (
               <PostsPage
                 message='No results found. Adjust keyword or like a post'
-                filter={`likes__owner__profile=${profile_id}&ordering=-likes__created_at&`} />
+                filter={`likes__user__profile=${profile_id}&ordering=-likes__created_at&`}
+              />
             )}
           />
           <Route exact path="/signin" render={() => <SignInForm />} />
           <Route exact path="/signup" render={() => <SignUpForm />} />
-          < Route exact path="/recipe-posts/create" render={() => <PostCreateForm />} />
+          <Route exact path="/recipe-posts/create" render={() => <PostCreateForm />} />
+          <Route exact path="/recipe-posts/:id/edit" render={() => <PostEditForm />} />
           <Route exact path="/recipe-posts/:id" render={() => <RecipePostPage />} />
           <Route render={() => <h3>Page not found!</h3>} />
         </Switch>

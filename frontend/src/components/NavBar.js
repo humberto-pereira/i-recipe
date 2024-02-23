@@ -43,7 +43,7 @@ const NavBar = () => {
 
         <NavLink className={styles.NavLink} 
             activeClassName={styles.Active} 
-            to="/favorites" 
+            to="/likes" 
             >
                 <i className='fas fa-heart'></i> Favorites
         </NavLink>
