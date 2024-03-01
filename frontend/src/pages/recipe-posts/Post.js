@@ -13,7 +13,6 @@ import RatingComponent from "../../components/RatingComponent";
 
 const Post = (props) => {
     const { id, title, content, image, updated_at, profile_id, profile_image, user, likes_count, comments_count, like_id, postPage, setPosts, average_rating, your_rating, rating_id } = props;
-    console.log("Post Props:", props);
     const [averageRating, setAverageRating] = useState(0);
 
     const currentUser = useCurrentUser();

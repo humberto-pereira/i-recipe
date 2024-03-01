@@ -8,7 +8,6 @@ const RatingComponent = ({ postId, initialAverageRating, userRating, onRatingSuc
     const [hasRated, setHasRated] = useState(false);
 
     useEffect(() => {
-        console.log("Initial Props:", { postId, initialAverageRating, userRating, rating_id});
         setAverageRating(initialAverageRating);
         setHasRated(!!userRating);
     }, [postId, initialAverageRating, userRating, rating_id]);
@@ -18,35 +17,28 @@ const RatingComponent = ({ postId, initialAverageRating, userRating, onRatingSuc
             setHasRated(true);
             // If there's a userRating already, it means the user has rated.
         }
-        console.log("Received userRating: ", userRating);
     }, [userRating]);
 
     const handleRating = async (newRating) => {
-        console.log("Current userRating:", userRating);
         let url, method;
         
         if (hasRated) {
-            // User has already rated, so we update the existing rating
+            // User has already rated, so update the existing rating
             url = `/ratings/${rating_id}/`; // Use rating_id directly
-            console.log("Updating existing rating", {rating_id});
             method = 'patch';
-            console.log("Updating existing rating");
         } else {
-            // No existing rating, so we create a new one
+            // No existing rating, so create a new one
             url = `/ratings/`;
             method = 'post';
-            console.log("Creating new rating");
         }
     
         const body = { recipe: postId, your_rating: newRating };
-        console.log('Post id', {postId});
-    
         try {
             const response = await axiosReq[method](url, body);
             if (response.status === 200 || response.status === 201) {
                 setAverageRating(response.data.recipe_average_rating);
                 onRatingSuccess(response.data.recipe_average_rating);
-                // After a successful rating, ensure we reflect that the user has now rated.
+                // After a successful rating, ensure it reflect that the user has now rated.
                 setHasRated(true);
             }
         } catch (error) {
