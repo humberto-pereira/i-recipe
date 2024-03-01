@@ -1,6 +1,7 @@
 from django.db.models import Avg
 from rest_framework import serializers
 from .models import RecipePosts
+from recipe_rating.models import RecipeRating
 from likes.models import Like
 
 
@@ -11,6 +12,15 @@ class RecipePostsSerializer(serializers.ModelSerializer):
     profile_image = serializers.ReadOnlyField(source='user.profile.image.url')
     like_id = serializers.SerializerMethodField()
     average_rating = serializers.SerializerMethodField()
+    your_rating = serializers.SerializerMethodField()
+    rating_id = serializers.SerializerMethodField()
+
+    def get_your_rating(self, obj):
+        user = self.context.get('request').user
+        if user.is_authenticated:
+            rating = RecipeRating.objects.filter(user=user, recipe=obj).first()
+            return rating.rating if rating else None
+        return None
 
     def get_is_user(self, obj):
         request = self.context.get('request')
@@ -23,6 +33,14 @@ class RecipePostsSerializer(serializers.ModelSerializer):
             return like.id if like else None
         return None
 
+    def get_rating_id(self, obj):
+        user = self.context['request'].user
+        if user.is_authenticated:
+            rating = RecipeRating.objects.filter(user=user, recipe=obj).first()
+            return rating.id if rating else None
+        return None
+
+
     def get_average_rating(self, obj):
         average = obj.ratings.aggregate(
             average_rating=Avg('rating'))['average_rating'] or 0.0
@@ -33,7 +51,8 @@ class RecipePostsSerializer(serializers.ModelSerializer):
         fields = [
             'id', 'user', 'created_at', 'updated_at', 'title', 'content',
             'profile_image', 'is_user', 'profile_id', 'image', 'tags',
-            'like_id', 'category', 'average_rating'
+            'like_id', 'category', 'average_rating',
+            'your_rating', 'rating_id'
         ]
         extra_kwargs = {'category': {'required': False, 'allow_null': True}}
 

@@ -27,9 +27,12 @@ class RecipeRatingSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = RecipeRating
-        fields = ['id', 'recipe', 'rated_by', 'created_at', 'updated_at',
+        fields = ['rating_id', 'recipe', 'rated_by', 'created_at', 'updated_at',
                   'profile_image', 'is_user', 'profile_id', 'recipe_title',
                   'your_rating', 'recipe_average_rating']
+        extra_kwargs = {
+            'rating_id': {'source': 'id', 'read_only': True}
+        }
 
     def get_recipe_average_rating(self, obj):
         return RecipeRating.calculate_average_for_recipe(obj.recipe_id)
@@ -40,4 +43,7 @@ class RecipeRatingDetailSerializer(RecipeRatingSerializer):
     Serializer to represent the RecipeRating model so that it can
     be used for the detail view and don't need to repeat the code.
     """
+    class Meta(RecipeRatingSerializer.Meta):
+        fields = RecipeRatingSerializer.Meta.fields + ['recipe']
+
     recipe = serializers.ReadOnlyField(source='post.id')

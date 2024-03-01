@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, version } from "react";
 import axios from "axios";
 import { useCurrentUser } from "../../contexts/CurrentUserContext";
 import styles from "../../styles/Post.module.css";
@@ -7,17 +7,20 @@ import { Link, useHistory } from "react-router-dom";
 import Avatar from "../../components/Avatar";
 import { axiosRes } from "../../api/axiosDefaults";
 import { MoreDropdown } from "../../components/MoreDropdown";
+import RatingComponent from "../../components/RatingComponent";
 
-//working version
-//working version
+
 
 const Post = (props) => {
-    const { id, title, content, image, updated_at, profile_id, profile_image, user, likes_count, comments_count, like_id, postPage, setPosts } = props;
+    const { id, title, content, image, updated_at, profile_id, profile_image, user, likes_count, comments_count, like_id, postPage, setPosts, average_rating, your_rating, rating_id } = props;
+    console.log("Post Props:", props);
+    const [averageRating, setAverageRating] = useState(0);
+
     const currentUser = useCurrentUser();
-    const [userRating, setUserRating] = useState(null);
-    const [averageRating, setAverageRating] = useState(null);
     const is_owner = currentUser?.username === user;
     const history = useHistory();
+    
+
 
     const handleEdit = () => {
         history.push(`/recipe-posts/${id}/edit`);
@@ -32,88 +35,6 @@ const Post = (props) => {
         }
     };
 
-
-
-    useEffect(() => {
-        if (typeof id === 'undefined') {
-            console.log('Recipe ID is undefined, skipping fetch.');
-            return;
-        }
-        const fetchRatings = async () => {
-            try {
-                const { data } = await axios.get(`/ratings/?recipe=${id}`);
-                console.log('Fetched ratings data:', data); // Log fetched data
-                const currentRecipeRatings = data.results.filter(rating => rating.recipe === id);
-
-                // find if the current user has rated this recipe.
-                const userRatingData = currentRecipeRatings.find(rating => rating.is_user);
-                if (userRatingData) {
-                    // If the current user has rated, use this rating.
-                    setUserRating(userRatingData.your_rating);
-                    setAverageRating(userRatingData.recipe_average_rating);
-                } else {
-                    // If the current user has not rated, use the average rating.
-                    const avgRating = currentRecipeRatings.length ? currentRecipeRatings[0].recipe_average_rating : null;
-                    setAverageRating(avgRating);
-                }
-                console.log('User rating:', userRatingData ? userRatingData.your_rating : 'Not rated by user'); // Log user rating
-                console.log('Average rating:', averageRating); // Log average rating
-            } catch (err) {
-                console.error("Failed to fetch ratings:", err);
-            }
-        };
-
-        fetchRatings();
-    }, [id, currentUser]);
-
-    const handleRating = async (rating) => {
-        if (!currentUser) {
-            alert("Please log in to rate.");
-            return;
-        }
-        if (userRating !== null) {
-            alert("You have already rated this recipe.");
-            return;
-        }
-
-        try {
-            const method = userRating ? "patch" : "post";
-            const response = await axios[method](`/ratings/${userRating ? userRating.id : ''}`, {
-                recipe: id,
-                your_rating: rating, // The rating the user wants to give
-            });
-
-            setUserRating(rating);
-            setAverageRating(response.data.recipe_average_rating);
-            console.log('Rating submission successful:', response.data); // Log successful rating submission
-            alert("You rated this recipe successfully.");
-        } catch (error) {
-            console.error("Rating submission error:", error);
-            if (error.response && error.response.data.your_rating) {
-                alert(error.response.data.your_rating[0]);
-            } else {
-                alert("You have already rated this recipe.");
-            }
-        }
-    };
-
-    const renderStars = () => {
-        // Default to 0 if no rating is available
-        const ratingToShow = typeof userRating === 'number' ? userRating : averageRating || 0;
-        console.log('Rating to show with stars:', ratingToShow); // Log rating used for displaying stars
-
-        return [1, 2, 3, 4, 5].map(star => (
-            <i key={star}
-                className={`fa fa-star ${star <= ratingToShow ? "checked" : ""}`}
-                onClick={() => handleRating(star)}
-                style={{
-                    cursor: userRating === null ? "pointer" : "default",
-                    color: star <= ratingToShow ? "#ffc107" : "#e4e5e9",
-                    marginRight: 5
-                }}
-            />
-        ));
-    };
 
     const handleLike = async () => {
         try {
@@ -148,7 +69,6 @@ const Post = (props) => {
     };
 
 
-
     return (
         <Card className={styles.Post}>
             <Card.Body>
@@ -172,9 +92,20 @@ const Post = (props) => {
             <Card.Body>
                 {title && <Card.Title className="text-center">{title}</Card.Title>}
                 {content && <Card.Text>{content}</Card.Text>}
-                <div>Average Rating: {averageRating}</div>
-                <div className={styles.PostBar}>{renderStars()}</div>
-                <div>{userRating !== null ? `You have already rated this recipe` : 'You have not rated this recipe yet.'}</div>
+                {/* // ratings goes here */}
+                <div>
+                    Average rating: {averageRating || average_rating || 0}
+                </div>
+                <RatingComponent
+                    currentUser={currentUser}
+                    postId={id}
+                    initialAverageRating={average_rating}
+                    userRating={your_rating}
+                    rating_id={rating_id}
+                    onRatingSuccess={(newAverageRating) => {
+                        setAverageRating(newAverageRating);
+                    }}
+                />
 
                 <div className={styles.PostBar}>
                     {is_owner ? (

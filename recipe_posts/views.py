@@ -17,7 +17,8 @@ class RecipePostsList(generics.ListCreateAPIView):
                         'likes__user__profile', 'user__profile']
     search_fields = ['title', 'content', 'user__username', 'tags']
     ordering_fields = ['likes_count', 'comments_count',
-                       'likes__created_at', 'average_rating']
+                       'likes__created_at', 'average_rating',
+                       'your_rating']
 
     def get_queryset(self):
         """
