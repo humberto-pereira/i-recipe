@@ -1,5 +1,5 @@
 // src/App.js
-import React, { createContext } from 'react';
+import React from 'react';
 import NavBar from './components/NavBar';
 import styles from './App.module.css';
 import Container from 'react-bootstrap/Container';
@@ -12,6 +12,9 @@ import PostsPage from './pages/recipe-posts/PostsPage';
 import PostEditForm from './pages/recipe-posts/PostEditForm';
 import { useCurrentUser } from './contexts/CurrentUserContext';
 import ProfilePage from "./pages/profiles/ProfilePage";
+import UsernameForm from "./pages/profiles/UsernameForm";
+import UserPasswordForm from "./pages/profiles/UserPasswordForm";
+import ProfileEditForm from "./pages/profiles/ProfileEditForm";
 
 
 
@@ -52,6 +55,23 @@ function App() {
           <Route exact path="/recipe-posts/:id/edit" render={() => <PostEditForm />} />
           <Route exact path="/recipe-posts/:id" render={() => <RecipePostPage />} />
           <Route exact path="/profiles/:id" render={() => <ProfilePage />} />
+          <Route
+            exact
+            path="/profiles/:id/edit/username"
+            render={() => <UsernameForm />}
+          />
+          <Route
+            exact
+            path="/profiles/:id/edit/password"
+            render={() => <UserPasswordForm />}
+          />
+          <Route
+            exact
+            path="/profiles/:id/edit"
+            render={() => <ProfileEditForm />}
+          />
+
+
           <Route render={() => <h3>Page not found!</h3>} />
         </Switch>
       </Container>
