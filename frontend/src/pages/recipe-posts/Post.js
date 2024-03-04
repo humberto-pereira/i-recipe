@@ -1,5 +1,4 @@
-import React, { useEffect, useState, version } from "react";
-import axios from "axios";
+import React, { useState } from "react";
 import { useCurrentUser } from "../../contexts/CurrentUserContext";
 import styles from "../../styles/Post.module.css";
 import { Card, Media, OverlayTrigger, Tooltip } from "react-bootstrap";
